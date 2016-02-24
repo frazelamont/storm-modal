@@ -12,36 +12,43 @@
     var instances = [],
         assign = require('object-assign'),
         merge = require('merge'),
+		classlist = require('dom-classlist'),
         defaults = {
             delay: 200,
             callback: null
         },
 		focusManager = require('./libs/storm-focus-manager'),
-        StormComponentPrototype = {
+        StormModal = {
             init: function() {
                 this.DOMElement.addEventListener('click', this.handleClick.bind(this), false);
+				//set up aria
             },
             handleClick: function(e) {
                 console.log(e.target, 'I\'ve been clicked');
-            }
+            },
+			open: function() {
+				//change class on documentElement
+				//change aria
+				//give focus to 
+			},
+			close: function() {
+				//change class on documentElement
+				//give focus to previosuly focused element
+				//change aria
+				//remove animation class on documentElemen
+			}
         };
     
     function init(sel, opts) {
-        var els = [].slice.call(document.querySelectorAll(sel));
+        var el = document.querySelector(sel);
         
-        if(els.length === 0) {
-            throw new Error('Modal cannot be initialised, no augmentable elements found');
+        if(!el === 0) {
+            throw new Error('Modal cannot be initialised, no augmentable element found');
         }
-        
-        els.forEach(function(el, i){
-            instances[i] = assign(Object.create(StormComponentPrototype), {
-                DOMElement: el,
-                settings: merge({}, defaults, opts)
-            });
-            //add further objects as assign arguments for object composition
-            instances[i].init();
-        });
-        return instances;
+        return assign(Object.create(StormModal), {
+			DOMElement: el,
+			settings: merge({}, defaults, opts)
+		});
     }
     
     function reload(els, opts) {
