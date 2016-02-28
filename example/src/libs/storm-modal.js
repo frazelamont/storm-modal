@@ -1,4 +1,9 @@
-module.exports = (function() {
+/**
+ * @name storm-modal: Accessible modal dialogue
+ * @version 0.1.0: Sun, 28 Feb 2016 19:16:22 GMT
+ * @author stormid
+ * @license MIT
+ */module.exports = (function() {
 	'use strict';
     
     var instances = [],

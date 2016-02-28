@@ -1,13 +1,4 @@
-(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.StormFocusManager = factory();
-  }
-}(this, function() {
-	'use strict';
+
     /*
     function StormFocusManager(el) {
 		this.node = el;
@@ -64,15 +55,11 @@
 	return StormFocusManager;
 	*/
 	
-	return {
-		init: function(el){
-			this.node = el;
-			this.focusableChildren = this.getFocusableChildren();
-		},
+	module.exports = {
 		getFocusableChildren: function() {
 			var focusableElements = ['a[href]', 'area[href]', 'input:not([disabled])', 'select:not([disabled])', 'textarea:not([disabled])', 'button:not([disabled])', 'iframe', 'object', 'embed', '[contenteditable]', '[tabindex]:not([tabindex="-1"])'];
 
-			this.focusableChildren = [].slice.call(this.node.querySelectorAll(focusableElements.join(','))).filter(function (child) {
+			return [].slice.call(this.node.querySelectorAll(focusableElements.join(','))).filter(function (child) {
 			  return !!(child.offsetWidth || child.offsetHeight || child.getClientRects().length);
 			});
 		},
@@ -103,5 +90,3 @@
 			}
 		}
 	};
-	
- }));

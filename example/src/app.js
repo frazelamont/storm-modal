@@ -1,9 +1,9 @@
 var STORM = (function(w, d) {
 	'use strict';
     
-    var Boilerplate = require('./libs/storm-component-boilerplate'),
+    var Modal = require('./libs/storm-modal'),
         init = function() {
-            Boilerplate.init('.js-boilerplate');
+            Modal.init('.js-trigger');
         };
 	
 	return {
