@@ -2,10 +2,8 @@ module.exports = (function() {
 	'use strict';
     
     var instances = [],
-        assign = require('object-assign'),
-        merge = require('merge'),
         defaults = {
-			onClassName: 'on--modal',
+			onClassName: 'active',
 			modalSelector: 'js-modal',
 			closeSelector: 'js-modal-close'
         },
@@ -36,7 +34,7 @@ module.exports = (function() {
         StormModal = {
             init: function() {
 				this.open = false;
-				this.node = document.querySelector('.'  + this.settings.modalSelector);
+				this.node = document.getElementById(this.openBtn.getAttribute('datat-target')).substr(1);
                 this.openBtn.addEventListener('click', this.toggle.bind(this), false);
                 document.querySelector('.' + this.settings.closeSelector).addEventListener('click', this.toggle.bind(this), false);
 				this.focusableChildren = this.getFocusableChildren();
@@ -50,7 +48,7 @@ module.exports = (function() {
 			},
 			toggle: function() {
 				this.open = !this.open;
-				this.classlist(document.documentElement).toggle(this.settings.onClassName);
+				STORM.UTILS.classlist(this.node).toggle(this.settings.onClassName);
 				this.setStyles();
 				this.node.setAttribute('aria-hidden', !this.open);
 				document.querySelector('main') && document.querySelector('main').setAttribute('aria-hidden', this.open);
@@ -62,17 +60,20 @@ module.exports = (function() {
         };
     
     function init(sel, opts) {
-        var el = document.querySelector(sel);
+        var els = [].slice.call(document.querySelectorAll(sel));
         
-        if(!el === 0) {
+        if(els.length === 0) {
             throw new Error('Modal cannot be initialised, no augmentable element found');
         }
-        return assign(Object.create(StormModal), {
-			openBtn: el,
-			settings: merge({}, defaults, opts)
-		}, require('./storm-focus-manager'), {
-			classlist: require('dom-classlist')
-		}).init();
+		
+		instances = els.map(function(el){
+			return STORM.UTILS.assign(Object.create(StormModal), {
+				openBtn: el,
+				settings: merge({}, defaults, opts)
+			}).init();
+		});
+        
+		return instances;
     }
 	
 	return {
