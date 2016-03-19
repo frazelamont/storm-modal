@@ -10,7 +10,7 @@ var UTILS = {
 
 		var Modal = require('./libs/storm-modal'),
 			init = function() {
-				Modal.init('.js-trigger');
+				Modal.init('.js-modal');
 			};
 
 		return {
@@ -25,4 +25,4 @@ global.STORM = {
     UI: UI
 };
 
-if('addEventListener' in window) window.addEventListener('DOMContentLoaded', STORM.init, false);
+if('addEventListener' in window) window.addEventListener('DOMContentLoaded', STORM.UI.init, false);
