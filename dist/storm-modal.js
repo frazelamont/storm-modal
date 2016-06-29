@@ -1,12 +1,10 @@
 /**
  * @name storm-modal: Accessible modal dialogue
- * @version 0.1.0: Wed, 22 Jun 2016 14:11:54 GMT
+ * @version 0.3.0: Wed, 29 Jun 2016 12:18:51 GMT
  * @author stormid
  * @license MIT
  */(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
+  if (typeof exports === 'object') {
     module.exports = factory();
   } else {
     root.StormModal = factory();
@@ -121,9 +119,9 @@
         }
 		
 		instances = els.map(function(el){
-			return STORM.UTILS.assign(Object.create(StormModal), {
+			return Object.assign(Object.create(StormModal), {
 				node: el,
-				settings: STORM.UTILS.merge({}, defaults, opts)
+				settings: Object.assign({}, defaults, opts)
 			}).init();
 		});
         

@@ -1,9 +1,5 @@
 var UTILS = {
-		merge: require('object-assign'),
-		assign: require('merge'),
-		attributelist: require('storm-attributelist'),
-		classlist: require('dom-classlist'),
-		throttle: require('lodash.throttle')
+		attributelist: require('storm-attributelist')
 	},
 	UI = (function(w, d) {
 		'use strict';
