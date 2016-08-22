@@ -20,7 +20,7 @@ npm install storm-modal
 
 ```javascript
 var modal = require('storm-modal')
-modal.init('js-modal');
+modal.init('.js-modal');
 ```
 
 ###Options
