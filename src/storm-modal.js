@@ -8,6 +8,10 @@
 	'use strict';
     
     var instances = [],
+        CONSTANTS = {
+            TRIGGER_EVENTS: ['click', 'keydown'],
+            TRIGGER_KEYCODES: [13, 32]
+        },
         defaults = {
 			onClassName: 'active',
 			modalSelector: 'js-modal',
@@ -32,7 +36,8 @@
 					bottom: 0,
 					right: 0,
 					zIndex: 9
-				}]
+				}],
+            callback: null
         },
         StormModal = {
             init: function() {
@@ -43,7 +48,12 @@
 					throw new Error('Modal cannot be initialised, no modal toggler elements found');
 				}
                 this.togglers.forEach(function(toggler){
-					toggler.addEventListener('click', this.toggle.bind(this), false);
+                    CONSTANTS.TRIGGER_EVENTS.forEach(function(ev){
+                        toggler.addEventListener(ev, function(e){
+                            if(!!e.keyCode && !~CONSTANTS.TRIGGER_KEYCODES.indexOf(e.keyCode)) { return; }
+                            this.change(this)
+                        }.bind(this), false);
+                    }.bind(this));
 				}.bind(this));
 				this.focusableChildren = this.getFocusableChildren();
 				this.setStyles();
@@ -58,7 +68,6 @@
 			},
 			trapTab: function(e){
 				var focusedIndex = this.focusableChildren.indexOf(document.activeElement);
-				console.log(focusedIndex);
 				if(e.shiftKey && focusedIndex === 0) {
 					e.preventDefault();
 					this.focusableChildren[this.focusableChildren.length - 1].focus();
@@ -83,27 +92,31 @@
 					this.trapTab(e);
 				}
 			},
-			open: function() {
-				document.addEventListener('keydown', this.keyListener.bind(this));
-				this.lastFocused =  document.activeElement;
-				window.setTimeout(function(){this.focusableChildren[0].focus();}.bind(this), 0);
-			},
-			close: function(){
-				document.removeEventListener('keydown', this.keyListener.bind(this));
-				this.lastFocused.focus();
-			},
-			toggle: function() {
-				if(!this.isOpen){
-					this.open();
-				} else {
-					this.close();
-				}
-				
-				this.isOpen = !this.isOpen;
-				this.setStyles();
-				this.node.setAttribute('aria-hidden', !this.isOpen);
-				document.querySelector('main') && document.querySelector('main').setAttribute('aria-hidden', this.isOpen);
-			}
+            open: function() {
+                document.addEventListener('keydown', this.keyListener.bind(this));
+                this.lastFocused =  document.activeElement;
+                window.setTimeout(function(){this.focusableChildren[0].focus();}.bind(this), 0);
+                this.toggle();
+            },
+            close: function(){
+                document.removeEventListener('keydown', this.keyListener.bind(this));
+                this.lastFocused.focus();
+                this.toggle();
+            },
+            toggle: function(){
+                this.isOpen = !this.isOpen;
+                this.setStyles();
+                this.node.setAttribute('aria-hidden', !this.isOpen);
+                document.querySelector('main') && document.querySelector('main').setAttribute('aria-hidden', this.isOpen);
+            },
+            change: function() {
+                if(!this.isOpen){
+                    this.open();
+                } else {
+                    this.close();
+                }
+                typeof this.settings.callback === 'function' &&  this.settings.callback.call(this);
+            }
         };
     
     function init(sel, opts) {
