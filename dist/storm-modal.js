@@ -1,6 +1,6 @@
 /**
  * @name storm-modal: Accessible modal dialogue
- * @version 0.4.0: Mon, 22 Aug 2016 16:53:59 GMT
+ * @version 0.5.0: Mon, 22 Aug 2016 16:55:53 GMT
  * @author stormid
  * @license MIT
  */(function(root, factory) {
@@ -63,6 +63,7 @@
 				this.focusableChildren = this.getFocusableChildren();
 				this.setStyles();
 				this.node.setAttribute('aria-hidden', true);
+				return this;
             },
 			getFocusableChildren: function() {
 				var focusableElements = ['a[href]', 'area[href]', 'input:not([disabled])', 'select:not([disabled])', 'textarea:not([disabled])', 'button:not([disabled])', 'iframe', 'object', 'embed', '[contenteditable]', '[tabindex]:not([tabindex="-1"])'];
