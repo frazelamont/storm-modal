@@ -14,29 +14,8 @@
         },
         defaults = {
 			onClassName: 'active',
+			mainSelector: 'main',
 			modalSelector: 'js-modal',
-			styles: [
-				{
-					opacity: 0,
-					visibility: 'hidden',
-					position: 'absolute',
-					overflow: 'hidden',
-					width:	0,
-					height:0
-				},
-				{
-					opacity:1,
-					visibility: 'visible',
-					overflow: 'auto',
-					position: 'fixed',
-					width: 'auto',
-					height: 'auto',
-					top: 0,
-					left: 0,
-					bottom: 0,
-					right: 0,
-					zIndex: 9
-				}],
             callback: null
         },
         StormModal = {
@@ -56,7 +35,6 @@
                     }.bind(this));
 				}.bind(this));
 				this.focusableChildren = this.getFocusableChildren();
-				this.setStyles();
 				this.node.setAttribute('aria-hidden', true);
 				return this;
             },
@@ -77,11 +55,6 @@
 						e.preventDefault();
 					  	this.focusableChildren[0].focus();
 					}
-				}
-			},
-			setStyles: function() {
-				for(var s in this.settings.styles[Number(this.isOpen)]) {
-					this.node.style[s] = this.settings.styles[Number(this.isOpen)][s];
 				}
 			},
 			keyListener: function(e){
@@ -106,9 +79,9 @@
             },
             toggle: function(){
                 this.isOpen = !this.isOpen;
-                this.setStyles();
                 this.node.setAttribute('aria-hidden', !this.isOpen);
-                document.querySelector('main') && document.querySelector('main').setAttribute('aria-hidden', this.isOpen);
+				this.node.classList.toggle(this.settings.onClassName);
+                document.querySelector(this.settings.mainSelector) && document.querySelector(this.settings.mainSelector).setAttribute('aria-hidden', this.isOpen);
             },
             change: function() {
                 if(!this.isOpen){

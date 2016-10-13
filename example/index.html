@@ -47,6 +47,10 @@
             padding:.25rem;
         }
 		.modal {
+			position: absolute;
+			overflow: hidden;
+			width:	0;
+			height:0;
 			background:rgba(0,0,0, .5);
 			top:0;
 			left:0;
@@ -77,8 +81,20 @@
 			bottom:0;
 			left:0;
 			right:0;
-			
 		}
+        .modal.active {
+			opacity:1;
+			visibility: visible;
+			overflow: auto;
+			position: fixed;
+			width: auto;
+			height: auto;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			z-index: 9;
+        }
 		*:focus {
 			outline: 1px solid red;
 		}

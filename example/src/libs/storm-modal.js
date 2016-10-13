@@ -1,6 +1,6 @@
 /**
  * @name storm-modal: Accessible modal dialogue
- * @version 0.4.0: Mon, 22 Aug 2016 16:53:59 GMT
+ * @version 0.5.2: Thu, 13 Oct 2016 11:10:47 GMT
  * @author stormid
  * @license MIT
  */(function(root, factory) {
@@ -19,29 +19,8 @@
         },
         defaults = {
 			onClassName: 'active',
+			mainSelector: 'main',
 			modalSelector: 'js-modal',
-			styles: [
-				{
-					opacity: 0,
-					visibility: 'hidden',
-					position: 'absolute',
-					overflow: 'hidden',
-					width:	0,
-					height:0
-				},
-				{
-					opacity:1,
-					visibility: 'visible',
-					overflow: 'auto',
-					position: 'fixed',
-					width: 'auto',
-					height: 'auto',
-					top: 0,
-					left: 0,
-					bottom: 0,
-					right: 0,
-					zIndex: 9
-				}],
             callback: null
         },
         StormModal = {
@@ -61,8 +40,8 @@
                     }.bind(this));
 				}.bind(this));
 				this.focusableChildren = this.getFocusableChildren();
-				this.setStyles();
 				this.node.setAttribute('aria-hidden', true);
+				return this;
             },
 			getFocusableChildren: function() {
 				var focusableElements = ['a[href]', 'area[href]', 'input:not([disabled])', 'select:not([disabled])', 'textarea:not([disabled])', 'button:not([disabled])', 'iframe', 'object', 'embed', '[contenteditable]', '[tabindex]:not([tabindex="-1"])'];
@@ -81,11 +60,6 @@
 						e.preventDefault();
 					  	this.focusableChildren[0].focus();
 					}
-				}
-			},
-			setStyles: function() {
-				for(var s in this.settings.styles[Number(this.isOpen)]) {
-					this.node.style[s] = this.settings.styles[Number(this.isOpen)][s];
 				}
 			},
 			keyListener: function(e){
@@ -110,9 +84,9 @@
             },
             toggle: function(){
                 this.isOpen = !this.isOpen;
-                this.setStyles();
                 this.node.setAttribute('aria-hidden', !this.isOpen);
-                document.querySelector('main') && document.querySelector('main').setAttribute('aria-hidden', this.isOpen);
+				this.node.classList.toggle(this.settings.onClassName);
+                document.querySelector(this.settings.mainSelector) && document.querySelector(this.settings.mainSelector).setAttribute('aria-hidden', this.isOpen);
             },
             change: function() {
                 if(!this.isOpen){
