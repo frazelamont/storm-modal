@@ -1,24 +1,9 @@
-var UTILS = {
-		attributelist: require('storm-attributelist')
-	},
-	UI = (function(w, d) {
-		'use strict';
+import Modal from './libs/storm-modal';
 
-		var Modal = require('./libs/storm-modal'),
-			init = function() {
-				Modal.init('.js-modal');
-			};
+const onDOMContentLoadedTasks = [() => {
+	let modal = Modal.init('.js-modal');
+	console.log(modal);
 
-		return {
-			init: init
-		};
-
-	})(window, document, undefined);
-
-
-global.STORM = {
-    UTILS: UTILS,
-    UI: UI
-};
-
-if('addEventListener' in window) window.addEventListener('DOMContentLoaded', STORM.UI.init, false);
+}];
+    
+if('addEventListener' in window) window.addEventListener('DOMContentLoaded', () => { onDOMContentLoadedTasks.forEach(fn => fn()); });
