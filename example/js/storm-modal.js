@@ -1,6 +1,6 @@
 /**
  * @name storm-modal: Accessible modal dialogue
- * @version 0.6.0: Thu, 05 Jan 2017 14:47:57 GMT
+ * @version 0.6.0: Thu, 05 Jan 2017 15:12:30 GMT
  * @author mjbp
  * @license MIT
  */
@@ -69,7 +69,7 @@ const StormModal = {
 	open() {
 		document.addEventListener('keydown', this.keyListener.bind(this));
 		this.lastFocused =  document.activeElement;
-		window.setTimeout(() => {this.focusableChildren[0].focus();}, 0);
+		this.focusableChildren.length && window.setTimeout(() => {this.focusableChildren[0].focus();}, 0);
 		this.toggle();
 	},
 	close(){

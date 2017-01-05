@@ -63,7 +63,7 @@ const StormModal = {
 	open() {
 		document.addEventListener('keydown', this.keyListener.bind(this));
 		this.lastFocused =  document.activeElement;
-		window.setTimeout(() => {this.focusableChildren[0].focus();}, 0);
+		this.focusableChildren.length && window.setTimeout(() => {this.focusableChildren[0].focus();}, 0);
 		this.toggle();
 	},
 	close(){
