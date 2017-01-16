@@ -1,7 +1,7 @@
 #Storm Modal
 
 [![Build Status](https://travis-ci.org/mjbp/storm-modal.svg?branch=master)](https://travis-ci.org/mjbp/storm-modal)
-[![codecov.io](http://codecov.io/github/mjbp/storm-component-boilerplate/coverage.svg?branch=master)](http://codecov.io/github/mjbp/storm-modal?branch=master)
+[![codecov.io](http://codecov.io/github/mjbp/storm-modal/coverage.svg?branch=master)](http://codecov.io/github/mjbp/storm-modal?branch=master)
 [![npm version](https://badge.fury.io/js/storm-modal.svg)](https://badge.fury.io/js/storm-modal)
 
 Accessible modal dialogue. Allowing multiple instances, and capturing and releasing focus accessibly.
