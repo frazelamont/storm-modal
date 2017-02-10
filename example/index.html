@@ -2,7 +2,7 @@
 <html lang="en" class="no-js">
 <head>
     <meta charset="utf-8">
-    <title>Storm Component</title>
+    <title>Storm Modal</title>
 	<script>document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/,'');</script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="cleartype" content="on">
@@ -14,60 +14,58 @@
     <meta property="og:description" content="">
     <meta property="og:site_name" content="">
     <meta name="application-name" content="">
-    <link href='https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism-okaidia.min.css">
     <style>
         * {
             margin:0;
             padding:0;
             box-sizing:border-box;
-            font-family: 'Open Sans', sans-serif;
+            font-family: sans-serif;
         }
         html,
         body {
             height:100%;
         }
-        h1,
-        h2,
-        h3 {
-            font: 1.25rem/1.2 'Open Sans', sans-serif;
+        hr {
+            height:1px;
+            width:100%;
+            display:block;
+            background:#ddd;
+            margin:24px 0;
+            border:0 none;
+        }
+        h1 {
+            font: 1.25rem/1.2 sans-serif;
             margin-bottom:1.5rem;
         }
         h2 {
-            font: 1rem/1.2 'Open Sans', sans-serif;
+            font: 1.1rem/1.2 sans-serif;
+            margin-bottom:12px;
+            padding-top:12px;
+        }
+        h3 {
+            font: 1rem/1.2 sans-serif;
+            margin-bottom:12px;
+            padding-top:12px;
         }
         p {
             margin-bottom:1.5rem;
-        }
-        button {
-            background-color:transparent;
-            padding:0;
-            border:0 none;
-            cursor:pointer;
-            font-size:.85rem;
-        }
-        button svg {
-            fill:blue;
-            position: relative;
-            top:.4rem;
         }
         header {
             width:100%;
             padding:20px;
             margin-bottom:40px;
         }
-        section {
-            margin-bottom: 3rem;
-        }
         .container {
             clear:both;
             overflow:hidden;
             margin:0 auto;
             width:80%;
+            max-width:1200px;
         }
         .row {
-            overflow:hidden;
-            width:100%;
             margin-left:-30px;
+            overflow:hidden
         }
 		.modal {
 			position: absolute;
@@ -122,6 +120,14 @@
 		*:focus {
 			outline: 1px solid red;
 		}
+        button {
+            background:#191919;
+            color:#fff;
+            padding:8px;
+            display:inline-block;
+            font-size:1rem;
+            border:0 none;
+        }
     </style>
 </head>
 <body>
@@ -130,6 +136,7 @@
     </header>
     <div class="container">
         <h1>Modal</h1>
+        <h2>Example</h2>
         <button class="js-modal-toggler">Open modal</button>
 		<div id="modal-1" class="js-modal modal" data-modal-toggler="js-modal-toggler">
 			<div class="modal__close js-modal-close js-modal-toggler">
@@ -144,7 +151,22 @@
 				</svg>
 			</div>
 		</div>
+        <hr>
+        <h2>Installation</h2>
+        <pre class="language-markup"><code>$ npm i -S storm-modal</code></pre>
+        <h2>Usage</h2>
+        <p>Import and initialise using a named import:</p>
+        <pre><code class="language-js">import Modal from 'storm-modal';
+            
+Modal.init('.js-modal');</code></pre>
+        <p>Or async using storm-load.js, add the .standalone file to your project, then initialise using the global name:</p>
+        <pre><code class="language-js">Load('/content/js/async/storm-modal.standalone.js')
+.then(() => {
+    Modal.init('.js-modal');
+});</code></pre>
     </div>
-	<script src="./js/app.js"></script>
+    </div>
+    <script src="./js/app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>
 </body>
 </html>

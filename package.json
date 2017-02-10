@@ -11,7 +11,7 @@
   "bugs": {
     "url": "https://github.com/mjbp/storm-modal/issues"
   },
-  "main": "dist/storm-modal.min.js",
+  "main": "dist/storm-modal.js",
   "keywords": [
     "stormid",
     "modal",
