@@ -28,6 +28,32 @@ HTML
 </div>
 ```
 
+CSS
+```
+.modal {
+    position: absolute;
+    overflow: hidden;
+    width:	0;
+    height:0;
+    background-color: rgba(0,0,0,.9);
+    top:0;
+    left:0;
+    opacity:0;
+    visibility:hidden;
+}
+.modal.active {
+    opacity:1;
+    visibility: visible;
+    overflow: auto;
+    position: fixed;
+    width: auto;
+    height: auto;
+    bottom: 0;
+    right: 0;
+    z-index: 9;
+}
+```
+
 JS
 ```
 npm i -S storm-modal
@@ -50,12 +76,12 @@ Load('/content/js/async/storm-modal.standalone.js')
 
 ##Options
 ```
-    {
-		onClassName:'active',
-		mainSelector: 'main',
-		modalSelector: 'js-modal',
-		callback: false
-    }
+{
+	onClassName:'active',
+	mainSelector: 'main',
+	modalSelector: 'js-modal',
+	callback: false
+}
 ```
 
 e.g.

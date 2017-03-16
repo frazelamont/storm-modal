@@ -171,6 +171,34 @@
         Modal content...
     </div>
 </div></script></code></pre>
+<h3>CSS</h3>
+    <p>Sample minimum CSS required</p>
+    <pre><code class="language-css"><script type="prism-html-markup">.modal {
+    position: absolute;
+    overflow: hidden;
+    width:	0;
+    height:0;
+    background-color: rgba(0,0,0,.9);
+    top:0;
+    left:0;
+    opacity:0;
+    visibility:hidden;
+}
+.modal.active {
+    opacity:1;
+    visibility: visible;
+    overflow: auto;
+    position: fixed;
+    width: auto;
+    height: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 9;
+}
+</script></code></pre>
+        <h3>HTML</h3>
         <p>Import and initialise using a named import:</p>
         <pre><code class="language-js">import Modal from 'storm-modal';
             

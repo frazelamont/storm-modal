@@ -1,7 +1,7 @@
 /**
  * @name storm-modal: Accessible modal dialogue
- * @version 0.6.0: Fri, 10 Mar 2017 17:43:13 GMT
- * @author mjbp
+ * @version 0.6.0: Thu, 16 Mar 2017 16:15:59 GMT
+ * @author stormid
  * @license MIT
  */
 (function(root, factory) {
