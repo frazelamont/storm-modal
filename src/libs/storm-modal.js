@@ -1,7 +1,7 @@
 /**
  * @name storm-modal: Accessible modal dialogue
- * @version 0.6.0: Thu, 05 Jan 2017 15:12:30 GMT
- * @author mjbp
+ * @version 0.6.0: Thu, 16 Mar 2017 16:15:58 GMT
+ * @author stormid
  * @license MIT
  */
 const CONSTANTS = {
