@@ -1,6 +1,6 @@
 {
   "name": "storm-modal",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Accessible modal dialogue",
   "author": "stormid",
   "license": "MIT",
@@ -66,6 +66,5 @@
     "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-node-resolve": "^3.0.0"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
