@@ -1,21 +1,7 @@
-/**
- * @name storm-modal: Accessible modal dialogue
- * @version 0.6.0: Thu, 16 Mar 2017 16:15:58 GMT
- * @author stormid
- * @license MIT
- */
-const CONSTANTS = {
-		TRIGGER_EVENTS: ['click', 'keydown'],
-		TRIGGER_KEYCODES: [13, 32]
-	},
-	defaults = {
-		onClassName: 'active',
-		mainSelector: 'main',
-		modalSelector: 'js-modal',
-		callback: false
-	};
+const TRIGGER_EVENTS = [window.PointerEvent ? 'pointerdown' : 'ontouchstart' in window ? 'touchstart' : 'click', 'keydown' ],
+      TRIGGER_KEYCODES = [13, 32];
 
-const StormModal = {
+export default {
 	init() {
 		this.isOpen = false;
 		this.togglers = this.node.getAttribute('data-modal-toggler') && [].slice.call(document.querySelectorAll('.' + this.node.getAttribute('data-modal-toggler')));
@@ -31,9 +17,9 @@ const StormModal = {
 	},
 	initTriggers(){
 		this.togglers.forEach(toggler => {
-			CONSTANTS.TRIGGER_EVENTS.forEach(ev => {
+			TRIGGER_EVENTS.forEach(ev => {
 				toggler.addEventListener(ev, e => {
-					if(!!e.keyCode && !~CONSTANTS.TRIGGER_KEYCODES.indexOf(e.keyCode)) return;
+					if(!!e.keyCode && !~TRIGGER_KEYCODES.indexOf(e.keyCode)) return;
 					e.preventDefault();
 					this.change(this);
 				});
@@ -92,18 +78,3 @@ const StormModal = {
 		typeof this.settings.callback === 'function' &&  this.settings.callback.call(this);
 	}
 };
-
-const init = (sel, opts) => {
-	let els = [].slice.call(document.querySelectorAll(sel));
-	
-	if(els.length === 0) throw new Error('Modal cannot be initialised, no trigger elements found');
-	
-	return els.map(el => {
-		return Object.assign(Object.create(StormModal), {
-			node: el,
-			settings: Object.assign({}, defaults, opts)
-		}).init();
-	});
-};
-    
-export default { init };

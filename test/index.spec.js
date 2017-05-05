@@ -1,6 +1,6 @@
 import should from 'should';
-import Modal from '../dist/storm-modal';
 import 'jsdom-global/register';
+import Modal from '../dist/storm-modal.standalone.js';
 
 const html = `<button class="js-modal-toggler">Open modal</button>
 				<div id="modal-1" class="js-modal modal" data-modal-toggler="js-modal-toggler">
