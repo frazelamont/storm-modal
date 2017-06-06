@@ -1,6 +1,6 @@
 /**
  * @name storm-modal: Accessible modal dialogue
- * @version 1.0.1: Fri, 05 May 2017 11:22:34 GMT
+ * @version 1.1.0: Tue, 06 Jun 2017 10:23:27 GMT
  * @author stormid
  * @license MIT
  */
@@ -12,12 +12,10 @@ const init = (sel, opts) => {
 	
 	if(els.length === 0) throw new Error('Modal cannot be initialised, no trigger elements found');
 	
-	return els.map(el => {
-		return Object.assign(Object.create(componentPrototype), {
+	return els.map(el => Object.assign(Object.create(componentPrototype), {
 			node: el,
 			settings: Object.assign({}, defaults, opts)
-		}).init();
-	});
+		}).init());
 };
     
 export default { init };

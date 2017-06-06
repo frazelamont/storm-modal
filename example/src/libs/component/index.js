@@ -6,12 +6,10 @@ const init = (sel, opts) => {
 	
 	if(els.length === 0) throw new Error('Modal cannot be initialised, no trigger elements found');
 	
-	return els.map(el => {
-		return Object.assign(Object.create(componentPrototype), {
+	return els.map(el => Object.assign(Object.create(componentPrototype), {
 			node: el,
 			settings: Object.assign({}, defaults, opts)
-		}).init();
-	});
+		}).init());
 };
     
 export default { init };

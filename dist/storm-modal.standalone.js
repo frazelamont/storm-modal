@@ -1,6 +1,6 @@
 /**
  * @name storm-modal: Accessible modal dialogue
- * @version 1.0.1: Fri, 05 May 2017 11:22:34 GMT
+ * @version 1.1.0: Tue, 06 Jun 2017 10:23:27 GMT
  * @author stormid
  * @license MIT
  */
@@ -32,6 +32,7 @@ var defaults = {
 
 var TRIGGER_EVENTS = [window.PointerEvent ? 'pointerdown' : 'ontouchstart' in window ? 'touchstart' : 'click', 'keydown'];
 var TRIGGER_KEYCODES = [13, 32];
+var FOCUSABLE_ELEMENTS = ['a[href]', 'area[href]', 'input:not([disabled])', 'select:not([disabled])', 'textarea:not([disabled])', 'button:not([disabled])', 'iframe', 'object', 'embed', '[contenteditable]', '[tabindex]:not([tabindex="-1"])'];
 
 var componentPrototype = {
 	init: function init() {
@@ -61,9 +62,7 @@ var componentPrototype = {
 		});
 	},
 	getFocusableChildren: function getFocusableChildren() {
-		var focusableElements = ['a[href]', 'area[href]', 'input:not([disabled])', 'select:not([disabled])', 'textarea:not([disabled])', 'button:not([disabled])', 'iframe', 'object', 'embed', '[contenteditable]', '[tabindex]:not([tabindex="-1"])'];
-
-		return [].slice.call(this.node.querySelectorAll(focusableElements.join(',')));
+		return [].slice.call(this.node.querySelectorAll(FOCUSABLE_ELEMENTS.join(',')));
 	},
 	trapTab: function trapTab(e) {
 		var focusedIndex = this.focusableChildren.indexOf(document.activeElement);

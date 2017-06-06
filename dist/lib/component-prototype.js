@@ -1,5 +1,8 @@
 const TRIGGER_EVENTS = [window.PointerEvent ? 'pointerdown' : 'ontouchstart' in window ? 'touchstart' : 'click', 'keydown' ],
-      TRIGGER_KEYCODES = [13, 32];
+      TRIGGER_KEYCODES = [13, 32],
+	  FOCUSABLE_ELEMENTS = ['a[href]', 'area[href]', 'input:not([disabled])', 'select:not([disabled])', 'textarea:not([disabled])', 'button:not([disabled])', 'iframe', 'object', 'embed', '[contenteditable]', '[tabindex]:not([tabindex="-1"])'];
+
+		
 
 export default {
 	init() {
@@ -27,9 +30,7 @@ export default {
 		});
 	},
 	getFocusableChildren() {
-		const focusableElements = ['a[href]', 'area[href]', 'input:not([disabled])', 'select:not([disabled])', 'textarea:not([disabled])', 'button:not([disabled])', 'iframe', 'object', 'embed', '[contenteditable]', '[tabindex]:not([tabindex="-1"])'];
-
-		return [].slice.call(this.node.querySelectorAll(focusableElements.join(',')));
+		return [].slice.call(this.node.querySelectorAll(FOCUSABLE_ELEMENTS.join(',')));
 	},
 	trapTab(e){
 		let focusedIndex = this.focusableChildren.indexOf(document.activeElement);
