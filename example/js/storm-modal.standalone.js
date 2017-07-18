@@ -1,6 +1,6 @@
 /**
  * @name storm-modal: Accessible modal dialogue
- * @version 1.1.0: Tue, 06 Jun 2017 10:23:27 GMT
+ * @version 1.1.1: Tue, 18 Jul 2017 15:38:31 GMT
  * @author stormid
  * @license MIT
  */
@@ -30,7 +30,7 @@ var defaults = {
 	callback: false
 };
 
-var TRIGGER_EVENTS = [window.PointerEvent ? 'pointerdown' : 'ontouchstart' in window ? 'touchstart' : 'click', 'keydown'];
+var TRIGGER_EVENTS = ['ontouchstart' in window ? 'touchstart' : 'click', 'keydown'];
 var TRIGGER_KEYCODES = [13, 32];
 var FOCUSABLE_ELEMENTS = ['a[href]', 'area[href]', 'input:not([disabled])', 'select:not([disabled])', 'textarea:not([disabled])', 'button:not([disabled])', 'iframe', 'object', 'embed', '[contenteditable]', '[tabindex]:not([tabindex="-1"])'];
 
@@ -81,9 +81,7 @@ var componentPrototype = {
 			e.preventDefault();
 			this.toggle();
 		}
-		if (this.isOpen && e.keyCode === 9) {
-			this.trapTab(e);
-		}
+		if (this.isOpen && e.keyCode === 9) this.trapTab(e);
 	},
 	open: function open() {
 		var _this2 = this;
@@ -107,11 +105,7 @@ var componentPrototype = {
 		document.querySelector(this.settings.mainSelector) && document.querySelector(this.settings.mainSelector).setAttribute('aria-hidden', this.isOpen);
 	},
 	change: function change() {
-		if (!this.isOpen) {
-			this.open();
-		} else {
-			this.close();
-		}
+		if (!this.isOpen) this.open();else this.close();
 		typeof this.settings.callback === 'function' && this.settings.callback.call(this);
 	}
 };
