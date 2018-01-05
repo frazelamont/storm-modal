@@ -1,6 +1,6 @@
 /**
  * @name storm-modal: Accessible modal dialogue
- * @version 1.1.1: Tue, 18 Jul 2017 15:38:31 GMT
+ * @version 1.1.2: Fri, 05 Jan 2018 10:47:34 GMT
  * @author stormid
  * @license MIT
  */
@@ -38,6 +38,8 @@ var componentPrototype = {
 	init: function init() {
 		this.isOpen = false;
 		this.togglers = this.node.getAttribute('data-modal-toggler') && [].slice.call(document.querySelectorAll('.' + this.node.getAttribute('data-modal-toggler')));
+
+		this.boundKeyListener = this.keyListener.bind(this);
 
 		if (!this.togglers.length) {
 			throw new Error('Modal cannot be initialised, no modal toggler elements found');
@@ -86,7 +88,7 @@ var componentPrototype = {
 	open: function open() {
 		var _this2 = this;
 
-		document.addEventListener('keydown', this.keyListener.bind(this));
+		document.addEventListener('keydown', this.boundKeyListener);
 		this.lastFocused = document.activeElement;
 		this.focusableChildren.length && window.setTimeout(function () {
 			_this2.focusableChildren[0].focus();
@@ -94,7 +96,7 @@ var componentPrototype = {
 		this.toggle();
 	},
 	close: function close() {
-		document.removeEventListener('keydown', this.keyListener.bind(this));
+		document.removeEventListener('keydown', this.boundKeyListener);
 		this.lastFocused.focus();
 		this.toggle();
 	},

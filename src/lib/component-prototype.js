@@ -8,6 +8,8 @@ export default {
 	init() {
 		this.isOpen = false;
 		this.togglers = this.node.getAttribute('data-modal-toggler') && [].slice.call(document.querySelectorAll('.' + this.node.getAttribute('data-modal-toggler')));
+
+		this.boundKeyListener = this.keyListener.bind(this);
             
 		if(!this.togglers.length) {
 			throw new Error('Modal cannot be initialised, no modal toggler elements found');
@@ -52,13 +54,13 @@ export default {
 		if (this.isOpen && e.keyCode === 9) this.trapTab(e);
 	},
 	open() {
-		document.addEventListener('keydown', this.keyListener.bind(this));
+		document.addEventListener('keydown', this.boundKeyListener);
 		this.lastFocused =  document.activeElement;
 		this.focusableChildren.length && window.setTimeout(() => {this.focusableChildren[0].focus();}, 0);
 		this.toggle();
 	},
 	close(){
-		document.removeEventListener('keydown', this.keyListener.bind(this));
+		document.removeEventListener('keydown', this.boundKeyListener);
 		this.lastFocused.focus();
 		this.toggle();
 	},
