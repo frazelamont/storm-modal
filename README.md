@@ -1,13 +1,10 @@
 # Storm Modal
-
-[![Build Status](https://travis-ci.org/mjbp/storm-modal.svg?branch=master)](https://travis-ci.org/mjbp/storm-modal)
-[![codecov.io](http://codecov.io/github/mjbp/storm-modal/coverage.svg?branch=master)](http://codecov.io/github/mjbp/storm-modal?branch=master)
 [![npm version](https://badge.fury.io/js/storm-modal.svg)](https://badge.fury.io/js/storm-modal)
 
-Accessible modal dialogue. Allowing multiple instances, and capturing and releasing focus accessibly.
+Accessible modal dialogue.
 
 ## Example
-[https://mjbp.github.io/storm-modal](https://mjbp.github.io/storm-modal)
+[https://stormid.github.io/storm-modal](https://stormid.github.io/storm-modal)
 
 ## Usage
 HTML
@@ -101,7 +98,7 @@ npm run test
 ## Browser support
 This is module has both es6 and es5 distributions. The es6 version should be used in a workflow that transpiles.
 
-The es5 version depends upon Promises so all evergreen browsers are supported out of the box, ie9+ is supported with polyfills. ie8+ will work with even more polyfils for Array functions and eventListeners.
+The es5 version depends upon Object.assign so all evergreen browsers are supported out of the box, ie9+ is supported with polyfills. ie8+ will work with even more polyfils for Array functions and eventListeners.
 
 ## Dependencies
 None
