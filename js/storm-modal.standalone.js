@@ -1,6 +1,6 @@
 /**
  * @name storm-modal: Accessible modal dialogue
- * @version 0.6.0: Thu, 16 Mar 2017 16:15:59 GMT
+ * @version 1.1.4: Fri, 09 Mar 2018 13:17:45 GMT
  * @author stormid
  * @license MIT
  */
@@ -23,21 +23,23 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-var CONSTANTS = {
-	TRIGGER_EVENTS: ['click', 'keydown'],
-	TRIGGER_KEYCODES: [13, 32]
-},
-    defaults = {
+var defaults = {
 	onClassName: 'active',
 	mainSelector: 'main',
 	modalSelector: 'js-modal',
 	callback: false
 };
 
-var StormModal = {
+var TRIGGER_EVENTS = ['ontouchstart' in window ? 'touchstart' : 'click', 'keydown'];
+var TRIGGER_KEYCODES = [13, 32];
+var FOCUSABLE_ELEMENTS = ['a[href]', 'area[href]', 'input:not([disabled])', 'select:not([disabled])', 'textarea:not([disabled])', 'button:not([disabled])', 'iframe', 'object', 'embed', '[contenteditable]', '[tabindex]:not([tabindex="-1"])'];
+
+var componentPrototype = {
 	init: function init() {
 		this.isOpen = false;
 		this.togglers = this.node.getAttribute('data-modal-toggler') && [].slice.call(document.querySelectorAll('.' + this.node.getAttribute('data-modal-toggler')));
+
+		this.boundKeyListener = this.keyListener.bind(this);
 
 		if (!this.togglers.length) {
 			throw new Error('Modal cannot be initialised, no modal toggler elements found');
@@ -52,9 +54,9 @@ var StormModal = {
 		var _this = this;
 
 		this.togglers.forEach(function (toggler) {
-			CONSTANTS.TRIGGER_EVENTS.forEach(function (ev) {
+			TRIGGER_EVENTS.forEach(function (ev) {
 				toggler.addEventListener(ev, function (e) {
-					if (!!e.keyCode && !~CONSTANTS.TRIGGER_KEYCODES.indexOf(e.keyCode)) return;
+					if (!!e.keyCode && !~TRIGGER_KEYCODES.indexOf(e.keyCode)) return;
 					e.preventDefault();
 					_this.change(_this);
 				});
@@ -62,9 +64,7 @@ var StormModal = {
 		});
 	},
 	getFocusableChildren: function getFocusableChildren() {
-		var focusableElements = ['a[href]', 'area[href]', 'input:not([disabled])', 'select:not([disabled])', 'textarea:not([disabled])', 'button:not([disabled])', 'iframe', 'object', 'embed', '[contenteditable]', '[tabindex]:not([tabindex="-1"])'];
-
-		return [].slice.call(this.node.querySelectorAll(focusableElements.join(',')));
+		return [].slice.call(this.node.querySelectorAll(FOCUSABLE_ELEMENTS.join(',')));
 	},
 	trapTab: function trapTab(e) {
 		var focusedIndex = this.focusableChildren.indexOf(document.activeElement);
@@ -83,14 +83,12 @@ var StormModal = {
 			e.preventDefault();
 			this.toggle();
 		}
-		if (this.isOpen && e.keyCode === 9) {
-			this.trapTab(e);
-		}
+		if (this.isOpen && e.keyCode === 9) this.trapTab(e);
 	},
 	open: function open() {
 		var _this2 = this;
 
-		document.addEventListener('keydown', this.keyListener.bind(this));
+		document.addEventListener('keydown', this.boundKeyListener);
 		this.lastFocused = document.activeElement;
 		this.focusableChildren.length && window.setTimeout(function () {
 			_this2.focusableChildren[0].focus();
@@ -98,7 +96,7 @@ var StormModal = {
 		this.toggle();
 	},
 	close: function close() {
-		document.removeEventListener('keydown', this.keyListener.bind(this));
+		document.removeEventListener('keydown', this.boundKeyListener);
 		this.lastFocused.focus();
 		this.toggle();
 	},
@@ -109,11 +107,7 @@ var StormModal = {
 		document.querySelector(this.settings.mainSelector) && document.querySelector(this.settings.mainSelector).setAttribute('aria-hidden', this.isOpen);
 	},
 	change: function change() {
-		if (!this.isOpen) {
-			this.open();
-		} else {
-			this.close();
-		}
+		if (!this.isOpen) this.open();else this.close();
 		typeof this.settings.callback === 'function' && this.settings.callback.call(this);
 	}
 };
@@ -124,12 +118,14 @@ var init = function init(sel, opts) {
 	if (els.length === 0) throw new Error('Modal cannot be initialised, no trigger elements found');
 
 	return els.map(function (el) {
-		return Object.assign(Object.create(StormModal), {
+		return Object.assign(Object.create(componentPrototype), {
 			node: el,
 			settings: Object.assign({}, defaults, opts)
 		}).init();
 	});
 };
 
-exports.default = { init: init };;
+var index = { init: init };
+
+exports.default = index;;
 }));

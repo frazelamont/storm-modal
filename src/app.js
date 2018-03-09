@@ -1,4 +1,4 @@
-import Modal from './libs/storm-modal';
+import Modal from './libs/component';
 
 const onDOMContentLoadedTasks = [() => {
 	let modal = Modal.init('.js-modal');

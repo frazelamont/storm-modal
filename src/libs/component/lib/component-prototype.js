@@ -1,24 +1,15 @@
-/**
- * @name storm-modal: Accessible modal dialogue
- * @version 0.6.0: Thu, 16 Mar 2017 16:15:58 GMT
- * @author stormid
- * @license MIT
- */
-const CONSTANTS = {
-		TRIGGER_EVENTS: ['click', 'keydown'],
-		TRIGGER_KEYCODES: [13, 32]
-	},
-	defaults = {
-		onClassName: 'active',
-		mainSelector: 'main',
-		modalSelector: 'js-modal',
-		callback: false
-	};
+const TRIGGER_EVENTS = ['ontouchstart' in window ? 'touchstart' : 'click', 'keydown' ],
+      TRIGGER_KEYCODES = [13, 32],
+	  FOCUSABLE_ELEMENTS = ['a[href]', 'area[href]', 'input:not([disabled])', 'select:not([disabled])', 'textarea:not([disabled])', 'button:not([disabled])', 'iframe', 'object', 'embed', '[contenteditable]', '[tabindex]:not([tabindex="-1"])'];
 
-const StormModal = {
+		
+
+export default {
 	init() {
 		this.isOpen = false;
 		this.togglers = this.node.getAttribute('data-modal-toggler') && [].slice.call(document.querySelectorAll('.' + this.node.getAttribute('data-modal-toggler')));
+
+		this.boundKeyListener = this.keyListener.bind(this);
             
 		if(!this.togglers.length) {
 			throw new Error('Modal cannot be initialised, no modal toggler elements found');
@@ -31,9 +22,9 @@ const StormModal = {
 	},
 	initTriggers(){
 		this.togglers.forEach(toggler => {
-			CONSTANTS.TRIGGER_EVENTS.forEach(ev => {
+			TRIGGER_EVENTS.forEach(ev => {
 				toggler.addEventListener(ev, e => {
-					if(!!e.keyCode && !~CONSTANTS.TRIGGER_KEYCODES.indexOf(e.keyCode)) return;
+					if(!!e.keyCode && !~TRIGGER_KEYCODES.indexOf(e.keyCode)) return;
 					e.preventDefault();
 					this.change(this);
 				});
@@ -41,9 +32,7 @@ const StormModal = {
 		});
 	},
 	getFocusableChildren() {
-		const focusableElements = ['a[href]', 'area[href]', 'input:not([disabled])', 'select:not([disabled])', 'textarea:not([disabled])', 'button:not([disabled])', 'iframe', 'object', 'embed', '[contenteditable]', '[tabindex]:not([tabindex="-1"])'];
-
-		return [].slice.call(this.node.querySelectorAll(focusableElements.join(',')));
+		return [].slice.call(this.node.querySelectorAll(FOCUSABLE_ELEMENTS.join(',')));
 	},
 	trapTab(e){
 		let focusedIndex = this.focusableChildren.indexOf(document.activeElement);
@@ -62,18 +51,16 @@ const StormModal = {
 			e.preventDefault();
 			this.toggle();
 		}
-		if (this.isOpen && e.keyCode === 9) {
-			this.trapTab(e);
-		}
+		if (this.isOpen && e.keyCode === 9) this.trapTab(e);
 	},
 	open() {
-		document.addEventListener('keydown', this.keyListener.bind(this));
+		document.addEventListener('keydown', this.boundKeyListener);
 		this.lastFocused =  document.activeElement;
 		this.focusableChildren.length && window.setTimeout(() => {this.focusableChildren[0].focus();}, 0);
 		this.toggle();
 	},
 	close(){
-		document.removeEventListener('keydown', this.keyListener.bind(this));
+		document.removeEventListener('keydown', this.boundKeyListener);
 		this.lastFocused.focus();
 		this.toggle();
 	},
@@ -84,26 +71,8 @@ const StormModal = {
 		document.querySelector(this.settings.mainSelector) && document.querySelector(this.settings.mainSelector).setAttribute('aria-hidden', this.isOpen);
 	},
 	change() {
-		if(!this.isOpen){
-			this.open();
-		} else {
-			this.close();
-		}
+		if(!this.isOpen) this.open();
+		else this.close();
 		typeof this.settings.callback === 'function' &&  this.settings.callback.call(this);
 	}
 };
-
-const init = (sel, opts) => {
-	let els = [].slice.call(document.querySelectorAll(sel));
-	
-	if(els.length === 0) throw new Error('Modal cannot be initialised, no trigger elements found');
-	
-	return els.map(el => {
-		return Object.assign(Object.create(StormModal), {
-			node: el,
-			settings: Object.assign({}, defaults, opts)
-		}).init();
-	});
-};
-    
-export default { init };
