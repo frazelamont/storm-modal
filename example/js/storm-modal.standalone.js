@@ -1,6 +1,6 @@
 /**
  * @name storm-modal: Accessible modal dialogue
- * @version 1.1.2: Fri, 05 Jan 2018 10:47:34 GMT
+ * @version 1.1.5: Fri, 27 Apr 2018 14:48:45 GMT
  * @author stormid
  * @license MIT
  */
@@ -30,7 +30,7 @@ var defaults = {
 	callback: false
 };
 
-var TRIGGER_EVENTS = ['ontouchstart' in window ? 'touchstart' : 'click', 'keydown'];
+var TRIGGER_EVENTS = window.PointerEvent ? ['pointerup'] : ['ontouchstart' in window ? 'touchstart' : 'click', 'keydown'];
 var TRIGGER_KEYCODES = [13, 32];
 var FOCUSABLE_ELEMENTS = ['a[href]', 'area[href]', 'input:not([disabled])', 'select:not([disabled])', 'textarea:not([disabled])', 'button:not([disabled])', 'iframe', 'object', 'embed', '[contenteditable]', '[tabindex]:not([tabindex="-1"])'];
 

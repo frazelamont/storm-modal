@@ -1,8 +1,6 @@
-const TRIGGER_EVENTS = ['ontouchstart' in window ? 'touchstart' : 'click', 'keydown' ],
+const TRIGGER_EVENTS = window.PointerEvent ? ['pointerup'] : ['ontouchstart' in window ? 'touchstart' : 'click', 'keydown' ],
       TRIGGER_KEYCODES = [13, 32],
 	  FOCUSABLE_ELEMENTS = ['a[href]', 'area[href]', 'input:not([disabled])', 'select:not([disabled])', 'textarea:not([disabled])', 'button:not([disabled])', 'iframe', 'object', 'embed', '[contenteditable]', '[tabindex]:not([tabindex="-1"])'];
-
-		
 
 export default {
 	init() {
