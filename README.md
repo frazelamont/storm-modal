@@ -1,7 +1,7 @@
 # Storm Modal
 [![npm version](https://badge.fury.io/js/storm-modal.svg)](https://badge.fury.io/js/storm-modal)
 
-Accessible modal dialogue.
+Accessible modal dialog.
 
 ## Example
 [https://stormid.github.io/storm-modal](https://stormid.github.io/storm-modal)
