@@ -1,21 +1,21 @@
-const TRIGGER_EVENTS = window.PointerEvent ? ['pointerup'] : ['ontouchstart' in window ? 'touchstart' : 'click', 'keydown' ],
+const TRIGGER_EVENTS = window.PointerEvent ? ['pointerup', 'keydown'] : ['ontouchstart' in window ? 'touchstart' : 'click', 'keydown' ],
       TRIGGER_KEYCODES = [13, 32],
 	  FOCUSABLE_ELEMENTS = ['a[href]', 'area[href]', 'input:not([disabled])', 'select:not([disabled])', 'textarea:not([disabled])', 'button:not([disabled])', 'iframe', 'object', 'embed', '[contenteditable]', '[tabindex]:not([tabindex="-1"])'];
 
 export default {
 	init() {
 		this.isOpen = false;
+		this.dialog = this.node.querySelector('[role=dialog]');
+		if(!this.dialog) throw new Error('Modal cannot be initialised, a modal must contain a dialog (role="dialog")');
+
 		this.togglers = this.node.getAttribute('data-modal-toggler') && [].slice.call(document.querySelectorAll('.' + this.node.getAttribute('data-modal-toggler')));
+		if(!this.togglers.length) throw new Error('Modal cannot be initialised, no modal toggler elements found');
 
 		this.boundKeyListener = this.keyListener.bind(this);
-            
-		if(!this.togglers.length) {
-			throw new Error('Modal cannot be initialised, no modal toggler elements found');
-		}
 
 		this.initTriggers();
 		this.focusableChildren = this.getFocusableChildren();
-		this.node.setAttribute('aria-hidden', true);
+		this.dialog.setAttribute('aria-hidden', true);
 		return this;
 	},
 	initTriggers(){
@@ -64,9 +64,9 @@ export default {
 	},
 	toggle(){
 		this.isOpen = !this.isOpen;
-		this.node.setAttribute('aria-hidden', !this.isOpen);
+		this.dialog.setAttribute('aria-hidden', !this.isOpen);
 		this.node.classList.toggle(this.settings.onClassName);
-		document.querySelector(this.settings.mainSelector) && document.querySelector(this.settings.mainSelector).setAttribute('aria-hidden', this.isOpen);
+		// document.querySelector(this.settings.mainSelector) && document.querySelector(this.settings.mainSelector).setAttribute('aria-hidden', this.isOpen);
 	},
 	change() {
 		if(!this.isOpen) this.open();

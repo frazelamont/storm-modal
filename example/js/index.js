@@ -1,6 +1,6 @@
 /**
  * @name storm-modal: Accessible modal dialogue
- * @version 1.1.6: Fri, 29 Jun 2018 12:59:36 GMT
+ * @version 1.1.7: Fri, 29 Jun 2018 13:17:02 GMT
  * @author stormid
  * @license MIT
  */
