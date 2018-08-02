@@ -1,6 +1,6 @@
 /**
  * @name storm-modal: Accessible modal dialogue
- * @version 1.1.7: Fri, 29 Jun 2018 13:20:38 GMT
+ * @version 1.2.0: Thu, 02 Aug 2018 12:23:05 GMT
  * @author stormid
  * @license MIT
  */
@@ -30,7 +30,7 @@ var defaults = {
 	callback: false
 };
 
-var TRIGGER_EVENTS = window.PointerEvent ? ['pointerup', 'keydown'] : ['ontouchstart' in window ? 'touchstart' : 'click', 'keydown'];
+var TRIGGER_EVENTS = window.PointerEvent ? ['pointerdown', 'keydown'] : ['ontouchstart' in window ? 'touchstart' : 'click', 'keydown'];
 var TRIGGER_KEYCODES = [13, 32];
 var FOCUSABLE_ELEMENTS = ['a[href]', 'area[href]', 'input:not([disabled])', 'select:not([disabled])', 'textarea:not([disabled])', 'button:not([disabled])', 'iframe', 'object', 'embed', '[contenteditable]', '[tabindex]:not([tabindex="-1"])'];
 
@@ -56,7 +56,7 @@ var componentPrototype = {
 		this.togglers.forEach(function (toggler) {
 			TRIGGER_EVENTS.forEach(function (ev) {
 				toggler.addEventListener(ev, function (e) {
-					if (!!e.keyCode && !~TRIGGER_KEYCODES.indexOf(e.keyCode)) return;
+					if (!!e.keyCode && !~TRIGGER_KEYCODES.indexOf(e.keyCode) || e.which && e.which === 3) return;
 					e.preventDefault();
 					_this.change(_this);
 				});
